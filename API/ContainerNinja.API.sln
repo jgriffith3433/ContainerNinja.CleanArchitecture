@@ -16,10 +16,21 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{776C7AEE-0C21-4663-B72E-2F8CD50F45CF}"
 	ProjectSection(SolutionItems) = preProject
 		.dockerignore = .dockerignore
+		..\build-all.bat = ..\build-all.bat
+		..\build-api.bat = ..\build-api.bat
+		..\build-client.bat = ..\build-client.bat
+		..\build-deploy-all.bat = ..\build-deploy-all.bat
+		..\build-deploy-api.bat = ..\build-deploy-api.bat
+		..\build-deploy-client.bat = ..\build-deploy-client.bat
+		..\build-deploy-proxy.bat = ..\build-deploy-proxy.bat
+		..\build-proxy.bat = ..\build-proxy.bat
+		..\deploy-all.bat = ..\deploy-all.bat
+		..\deploy-api.bat = ..\deploy-api.bat
+		..\deploy-client.bat = ..\deploy-client.bat
 		deploy-local-docker.bat = deploy-local-docker.bat
+		..\deploy-proxy.bat = ..\deploy-proxy.bat
 		..\docker-compose.yaml = ..\docker-compose.yaml
 		Dockerfile = Dockerfile
-		publish-docker.bat = publish-docker.bat
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
