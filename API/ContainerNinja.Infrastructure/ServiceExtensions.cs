@@ -16,10 +16,13 @@ namespace ContainerNinja.Infrastructure
 
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddSqlite<DatabaseContext>(configuration.GetConnectionString("DefaultConnection"), (options) =>
-            {
-                options.MigrationsAssembly("ContainerNinja.Migrations");
-            });
+
+            //services.AddDbContext<DatabaseContext>(options =>
+            //    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+            //        builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+            return services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                    builder => builder.MigrationsAssembly("ContainerNinja.Migrations")));
         }
 
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)

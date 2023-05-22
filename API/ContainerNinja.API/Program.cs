@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,7 +34,6 @@ namespace ContainerNinja
                     await db.SaveChangesAsync();
                 });
             }
-
             builder.Run();
         }
 
@@ -41,7 +41,11 @@ namespace ContainerNinja
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel()
+                    .UseContentRoot(Directory.GetCurrentDirectory())
+                    .UseIISIntegration()
+                    .UseStartup<Startup>()
+                    .UseUrls("http://0.0.0.0:5000/");//, "https://0.0.0.0:5001/"
                 });
     }
 }

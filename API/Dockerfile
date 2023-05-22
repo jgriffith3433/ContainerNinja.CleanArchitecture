@@ -25,6 +25,7 @@ FROM build AS publish
 RUN dotnet publish -c Release -o /app/publish
 
 FROM base AS runtime
+EXPOSE 5000
 WORKDIR /app
 
 COPY --from=publish /app/publish .

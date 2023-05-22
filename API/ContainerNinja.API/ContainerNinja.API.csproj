@@ -2,17 +2,13 @@
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
-	</PropertyGroup>
+  </PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="config.ncconf" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -22,6 +18,9 @@
 
 	<ItemGroup>
 	  <None Update="client.ncconf">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="config.ncconf">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

@@ -6,6 +6,7 @@ using FluentValidation;
 using ContainerNinja.Core.Exceptions;
 using AutoMapper;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace ContainerNinja.Core.Handlers.Commands
 {
@@ -24,13 +25,15 @@ namespace ContainerNinja.Core.Handlers.Commands
         private readonly IValidator<CreateOrUpdateItemDTO> _validator;
         private readonly IMapper _mapper;
         private readonly ILogger<CreateItemCommandHandler> _logger;
+        private readonly IDistributedCache _cache;
 
-        public CreateItemCommandHandler(ILogger<CreateItemCommandHandler> logger, IUnitOfWork repository, IValidator<CreateOrUpdateItemDTO> validator, IMapper mapper)
+        public CreateItemCommandHandler(ILogger<CreateItemCommandHandler> logger, IUnitOfWork repository, IValidator<CreateOrUpdateItemDTO> validator, IMapper mapper, IDistributedCache cache)
         {
             _repository = repository;
             _validator = validator;
             _mapper = mapper;
             _logger = logger;
+            _cache = cache;
         }
 
         public async Task<ItemDTO> Handle(CreateItemCommand request, CancellationToken cancellationToken)
@@ -60,7 +63,7 @@ namespace ContainerNinja.Core.Handlers.Commands
 
             _repository.Items.Add(entity);
             await _repository.CommitAsync();
-
+            _cache.Remove("all_items");
             return _mapper.Map<ItemDTO>(entity);
         }
     }

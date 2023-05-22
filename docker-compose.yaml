@@ -1,21 +1,61 @@
 version: "3"
-services: 
+services:
     proxy:
-        build: 
+        container_name: proxy
+        image: urvaius/wof-proxy:latest
+        build:
             context: ./Proxy
             dockerfile: Dockerfile
-        ports: 
-            - "80:80"
         restart: always
+        depends_on:
+            - client
+            - api
+        links:
+            - client
+            - api
+        networks:
+            - wof
+        ports:
+            - 80:80
+        expose:
+            - 80
+        volumes:
+            - ./appdata:/appdata
     client:
+        container_name: client
+        image: urvaius/wof-client:latest
         build:
             context: ./Client
             dockerfile: Dockerfile
-        ports: 
-            - "9000:80"
+        depends_on:
+            - api
+        links:
+            - api
+        networks:
+            - wof
+        ports:
+            - 9000:9000
+        expose:
+            - 9000
+        volumes:
+            - ./appdata:/appdata
     api:
-        build: 
+        container_name: api
+        image: urvaius/wof-api:latest
+        build:
             context: ./API
             dockerfile: Dockerfile
-        ports: 
-            - "5000:80"
+        volumes:
+            - ./appdata:/appdata
+        networks:
+            - wof
+        ports:
+            - 5000:5000
+        expose:
+            - 5000
+
+networks:
+    wof:
+        name: wof
+        driver: bridge
+        
